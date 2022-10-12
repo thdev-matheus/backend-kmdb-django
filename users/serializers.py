@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from traitlets import default
 
 from .models import User
 
@@ -35,8 +36,8 @@ class UserSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=50)
 
     # optional fields
-    bio = serializers.CharField(allow_null=True, allow_blank=True, default="")
-    is_critic = serializers.BooleanField(default=True)
+    bio = serializers.CharField(allow_null=True, default=None)
+    is_critic = serializers.BooleanField(default=False)
 
     def create(self, validated_data):
         new_user = User.objects.create(**validated_data)
