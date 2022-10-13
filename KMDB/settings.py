@@ -38,7 +38,10 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PART = ["rest_framework"]
+THIRD_PART = [
+    "rest_framework",
+    "rest_framework.authtoken",
+]
 
 MY_APPS = ["users"]
 

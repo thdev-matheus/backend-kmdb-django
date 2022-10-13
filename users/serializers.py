@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from traitlets import default
 
 from .models import User
 
@@ -40,7 +39,7 @@ class UserSerializer(serializers.Serializer):
     is_critic = serializers.BooleanField(default=False)
 
     def create(self, validated_data):
-        new_user = User.objects.create(**validated_data)
+        new_user = User.objects.create_user(**validated_data)
 
         return new_user
 
@@ -51,3 +50,9 @@ class UserSerializer(serializers.Serializer):
         instance.save()
 
         return instance
+
+
+# Eu realmente não sei por que a entrega pede para criar esse aqui se já existe isso no próprio serializer ObtainAuthToken
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
