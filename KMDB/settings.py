@@ -43,7 +43,12 @@ THIRD_PART = [
     "rest_framework.authtoken",
 ]
 
-MY_APPS = ["users"]
+MY_APPS = [
+    "users",
+    "reviews",
+    "movies",
+    "genres",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PART + MY_APPS
 
