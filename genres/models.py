@@ -3,4 +3,4 @@ from django.forms import CharField
 
 
 class Genre(models.Model):
-    name = CharField(max_length=127)
+    name = models.CharField(max_length=127)
