@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from KMDB.pagination import CustomPageNumberPagination
 from movies.models import Movie
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView, Request, Response, status
@@ -8,19 +9,18 @@ from .permissions import AdminCriticOrOwner, AdminCriticOrReadOnly
 from .serializers import ReviewSerializer
 
 
-class ReviewView(APIView):
+class ReviewView(APIView, CustomPageNumberPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [AdminCriticOrReadOnly]
 
     def get(self, request: Request, movie_id: int) -> Response:
         reviews = Review.objects.filter(movie_id=movie_id)
 
-        if not reviews:
-            return Response({"detail": "reviews not found."}, status.HTTP_404_NOT_FOUND)
+        result_page = self.paginate_queryset(reviews, request, view=self)
 
-        serializer = ReviewSerializer(reviews, many=True)
+        serializer = ReviewSerializer(result_page, many=True)
 
-        return Response(serializer.data)
+        return self.get_paginated_response(serializer.data)
 
     def post(self, request: Request, movie_id: int) -> Response:
         movie = get_object_or_404(Movie, id=movie_id)

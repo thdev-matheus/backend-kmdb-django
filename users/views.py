@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from KMDB.pagination import CustomPageNumberPagination
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -11,16 +12,18 @@ from users.permissions import IsAdminOrOwner
 from .serializers import UserSerializer
 
 
-class UserViews(APIView):
+class UserViews(APIView, CustomPageNumberPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAdminUser]
 
     def get(self, request: Request) -> Response:
         users = User.objects.all()
 
-        serializer = UserSerializer(users, many=True)
+        result_page = self.paginate_queryset(users, request, view=self)
 
-        return Response(serializer.data)
+        serializer = UserSerializer(result_page, many=True)
+
+        return self.get_paginated_response(serializer.data)
 
 
 class UserParamsViews(APIView):
