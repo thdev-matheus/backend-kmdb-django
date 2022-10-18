@@ -4,11 +4,11 @@ from . import views
 
 urlpatterns = [
     path(
-        "<int:movie_id>/reviews/",
+        "movies/<int:movie_id>/reviews/",
         views.ReviewView.as_view(),
     ),
     path(
-        "<int:movie_id>/reviews/<int:review_id>/",
+        "movies/<int:movie_id>/reviews/<int:review_id>/",
         views.ReviewParamsView.as_view(),
     ),
 ]

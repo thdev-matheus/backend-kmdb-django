@@ -54,6 +54,7 @@ class ReviewParamsView(APIView):
         return Response(serializer.data)
 
     def delete(self, request: Request, movie_id: int, review_id: int) -> Response:
+
         review = get_object_or_404(Review, id=review_id, movie_id=movie_id)
 
         self.check_object_permissions(request, review.critic)
