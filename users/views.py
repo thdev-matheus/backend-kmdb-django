@@ -52,13 +52,13 @@ class UserCreateView(APIView):
 
 
 class UserLoginView(ObtainAuthToken):
-    def post(self, request: Request) -> Response:
-        login_serializer = self.serializer_class(data=request.data)
-        login_serializer.is_valid(raise_exception=True)
+    """def post(self, request: Request) -> Response:
+    login_serializer = self.serializer_class(data=request.data)
+    login_serializer.is_valid(raise_exception=True)
 
-        user = login_serializer.validated_data["user"]
-        user_serializer = UserSerializer(user)
+    user = login_serializer.validated_data["user"]
+    user_serializer = UserSerializer(user)
 
-        token, _ = Token.objects.get_or_create(user=user)
+    token, _ = Token.objects.get_or_create(user=user)
 
-        return Response({"token": token.key, "user": user_serializer.data})
+    return Response({"token": token.key, "user": user_serializer.data})"""
